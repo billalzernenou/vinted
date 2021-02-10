@@ -17,9 +17,9 @@ mongoose.connect(process.env.MONGODB_URI, {
 
 // config cloudinary
 cloudinary.config({
-  cloud_name: process.env.COUDINARY_CLOUD_NAME,
-  api_key: process.env.COUDINARY_PUBLIC_KEY,
-  api_secret: process.env.COUDINARY_SECRET_KEY,
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_PUBLIC_KEY,
+  api_secret: process.env.CLOUDINARY_SECRET_KEY,
 });
 
 // import routes
