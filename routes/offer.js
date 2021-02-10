@@ -141,7 +141,7 @@ router.post("/offer/delete", isAuthenticated, async (req, res) => {
   }
 });
 
-router.get("/offers", isAuthenticated, async (req, res) => {
+router.get("/offers", async (req, res) => {
   try {
     // page to displat and maxDisplay
     const maxDisplayOffers = 3;
@@ -176,6 +176,8 @@ router.get("/offers", isAuthenticated, async (req, res) => {
     }
     if (req.query.sort) {
       sortProductPrice = req.query.sort.replace("price-", "");
+    } else {
+      sortProductPrice = null;
     }
     // find
     const offers = await Offer.find(filters)
@@ -199,6 +201,7 @@ router.get("/offers", isAuthenticated, async (req, res) => {
 
 router.post("/offer/:id", async (req, res) => {
   try {
+    console.log("a");
     // find offer
     if (req.params.id) {
       const offer = await Offer.findById(req.params.id);
