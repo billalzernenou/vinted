@@ -62,7 +62,7 @@ router.post("/offer/publish", isAuthenticated, async (req, res) => {
       res.status(401).json({ message: "your fields are Not valid " });
     }
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(400).json({ message: error });
   }
 });
 
@@ -118,7 +118,7 @@ router.post("/offer/update", isAuthenticated, async (req, res) => {
       res.status(400).json({ message: "please set an Id " });
     }
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(400).json({ message: error });
   }
 });
 
@@ -139,7 +139,7 @@ router.post("/offer/delete", isAuthenticated, async (req, res) => {
       res.status(404).json({ message: "Offer doesn't exist" });
     }
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(400).json({ message: error });
   }
 });
 
@@ -197,7 +197,7 @@ router.get("/offers", async (req, res) => {
       res.status(200).json({ message: "No offer found" });
     }
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(400).json({ message: error });
   }
 });
 
@@ -216,7 +216,7 @@ router.post("/offer/:id", async (req, res) => {
       res.status(400).json({ message: "Id missing" });
     }
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(400).json({ message: error });
   }
 });
 module.exports = router;
