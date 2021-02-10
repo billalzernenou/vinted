@@ -30,12 +30,15 @@ router.post("/user/signup", async (req, res) => {
           salt: salt,
         });
         // step 2.2 upload profile picture
-        const pictureToUpload = req.files.picture.path;
-        const result = await cloudinary.uploader.upload(pictureToUpload, {
-          folder: "vinted/users",
-          public_id: newUser.id,
-        });
-        newUser.account.avatar = result.secure_url;
+        if (req.files.picture.path) {
+          const pictureToUpload = req.files.picture.path;
+          const result = await cloudinary.uploader.upload(pictureToUpload, {
+            folder: "vinted/users",
+            public_id: newUser.id,
+          });
+          newUser.account.avatar = result.secure_url;
+        }
+
         // step 3 : Save user
         await newUser.save();
         //step 4 : response to the client
@@ -59,7 +62,7 @@ router.post("/user/signup", async (req, res) => {
       });
     }
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(400).json({ message: error });
   }
 });
 router.post("/user/login", async (req, res) => {
