@@ -44,13 +44,15 @@ router.post("/offer/publish", isAuthenticated, async (req, res) => {
         owner: req.user,
       });
       //  Grab the path of the picture using req.files  thanks express formidable !
-      const pictureToUpload = req.files.picture.path;
-      // use cloudinary service to load the image  & set public_id === offer.id
-      const result = await cloudinary.uploader.upload(pictureToUpload, {
-        folder: `/vinted/offers/${createdOffer.id}`,
-        // public_id: createdOffer.id,
-      });
-      createdOffer.product_image = result;
+      if (req.files.picture.path) {
+        const pictureToUpload = req.files.picture.path;
+        // use cloudinary service to load the image  & set public_id === offer.id
+        const result = await cloudinary.uploader.upload(pictureToUpload, {
+          folder: `/vinted/offers/${createdOffer.id}`,
+          // public_id: createdOffer.id,
+        });
+        createdOffer.product_image = result;
+      }
 
       //save offer
       await createdOffer.save();
