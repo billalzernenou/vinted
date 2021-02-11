@@ -207,10 +207,12 @@ router.get("/offers", async (req, res) => {
 
 router.post("/offer/:id", async (req, res) => {
   try {
-    console.log("a");
     // find offer
     if (req.params.id) {
-      const offer = await Offer.findById(req.params.id);
+      const offer = await Offer.findById(req.params.id).populate({
+        path: "owner",
+        select: "account",
+      });
       if (offer) {
         res.status(200).json(offer);
       } else {
