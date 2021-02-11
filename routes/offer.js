@@ -146,7 +146,7 @@ router.post("/offer/delete", isAuthenticated, async (req, res) => {
 router.get("/offers", async (req, res) => {
   try {
     // page to displat and maxDisplay
-    const maxDisplayOffers = 3;
+    const maxDisplayOffers = 15;
     let pageToDisplay;
     if (req.query.page < 1) {
       pageToDisplay = 1;
@@ -189,8 +189,8 @@ router.get("/offers", async (req, res) => {
       })
       .sort({ product_price: sortProductPrice })
       .skip((pageToDisplay - 1) * maxDisplayOffers)
-      .limit(maxDisplayOffers)
-      .select("product_name product_price product_description");
+      .limit(maxDisplayOffers);
+    // .select("product_name product_price product_description");
 
     if (offers.length > 0) {
       //count documents using parameter filters
