@@ -30,6 +30,7 @@ router.post("/user/signup", async (req, res) => {
           salt: salt,
         });
         // step 2.2 upload profile picture
+        newUser.account.avatar = null;
         if (req.files.picture.path) {
           const pictureToUpload = req.files.picture.path;
           const result = await cloudinary.uploader.upload(pictureToUpload, {
@@ -38,7 +39,6 @@ router.post("/user/signup", async (req, res) => {
           });
           newUser.account.avatar = result.secure_url;
         }
-
         // step 3 : Save user
         await newUser.save();
         //step 4 : response to the client
