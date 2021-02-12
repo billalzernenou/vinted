@@ -10,7 +10,6 @@ const User = require("../models/User");
 
 router.post("/user/signup", async (req, res) => {
   try {
-    console.log("signup route, here I am ");
     // email unique assert
     const user = await User.findOne({ email: req.fields.email });
     if (!user) {
@@ -25,16 +24,15 @@ router.post("/user/signup", async (req, res) => {
           account: {
             username: req.fields.username,
             phone: req.fields.phone,
+            avatar: "",
           },
           token: token,
           hash: hash,
           salt: salt,
         });
         // step 2.2 upload profile picture
-        console.log("0 : start");
-        console.log(typeOf(req.files.picture.path));
-        console.log(req.files.picture.path);
-        if (req.files.picture.path) {
+
+        if (req.files.picture) {
           const pictureToUpload = req.files.picture.path;
           const result = await cloudinary.uploader.upload(pictureToUpload, {
             folder: "vinted/users",
@@ -53,7 +51,7 @@ router.post("/user/signup", async (req, res) => {
             username: newUser.account.username,
             phone: newUser.account.phone,
           },
-          // avatar: newUser.account.avatar,
+          avatar: newUser.account.avatar,
         });
       } else {
         res.status(400).json({
@@ -61,18 +59,13 @@ router.post("/user/signup", async (req, res) => {
         });
       }
     } else {
-      console.log("1");
-
       res.status(400).json({
         message: "This email already has an account",
       });
     }
   } catch (error) {
-    console.log("2");
     res.status(400).json({ message: error });
   }
-  console.log("3");
-  console.log("------------------");
 });
 router.post("/user/login", async (req, res) => {
   try {
